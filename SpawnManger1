@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpawnManger : MonoBehaviour
+{
+    public GameObject[] enemycar;
+    private float xrange = 8.0f;
+    private float zrange = 175.65f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // (function name, start time , repeat time)
+        InvokeRepeating("spawncar", 0, 2);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    void spawncar()
+    {
+        // random location within the ranges
+        Vector3 location = new Vector3(Random.Range(-xrange, xrange), -1.907349e-06f, zrange);
+        int index = Random.Range(0, enemycar.Length);
+
+        // spawn the object
+        // ( game object , location , rotation)
+        Instantiate(enemycar[index], location, enemycar[index].transform.rotation);
+    }
+}
