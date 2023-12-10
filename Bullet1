@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bullet : MonoBehaviour
+{
+    private float zrange = 175.65f;
+    private GameManager gm;
+    // Start is called before the first frame update
+    void Start()
+    {
+        gm = FindObjectOfType<GameManager>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate(Vector3.forward * Time.deltaTime * 20);
+
+
+        //destroy bullet if it goes out of range
+        if (transform.position.z > zrange)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("EnemyCar"))
+        {
+            Destroy(gameObject);        // destroy bullet
+            Destroy(other.gameObject);  // destroy enemy car
+            gm.inc_score();
+        }
+    }
+}
